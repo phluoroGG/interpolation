@@ -1,3 +1,2 @@
 numpy
-bisect
 matplotlib

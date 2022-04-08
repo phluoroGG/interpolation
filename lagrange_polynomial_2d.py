@@ -1,5 +1,5 @@
 import numpy as np
-from lagrange_interpolation import *
+from lagrange_polynomial import *
 
 
 class LagrangePolynomial2D:

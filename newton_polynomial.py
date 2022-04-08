@@ -7,16 +7,16 @@ class NewtonPolynomial:
         if param < self.x[0] or param > self.x[-1]:
             return None
 
-        result1 = 0
+        result = 0
         for i in range(1, len(self.x) + 1):
-            result = 0
+            temp_value = 0
             for j in range(i):
-                resultraz1 = self.y[j]
+                divided_difference = self.y[j]
                 for k in range(i):
                     if j != k:
-                        resultraz1 /= (self.x[j] - self.x[k])
-                result += resultraz1
+                        divided_difference /= (self.x[j] - self.x[k])
+                temp_value += divided_difference
             for j in range(i - 1):
-                result *= param - self.x[j]
-            result1 += result
-        return result1
+                temp_value *= param - self.x[j]
+            result += temp_value
+        return result

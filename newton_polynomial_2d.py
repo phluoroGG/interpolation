@@ -1,5 +1,5 @@
 import numpy as np
-from newton_interpolation import *
+from newton_polynomial import *
 
 
 class NewtonPolynomial2D:

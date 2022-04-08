@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from cubic_spline_3d import *
 
 
-def calculate_2d_spline_interpolation(x, y, z, num=500):
+def calculate_3d_spline_interpolation(x, y, z, num=500):
     cubic_spline_3d = CubicSpline3D(x, y, z)
     params = np.linspace(cubic_spline_3d.params[0], cubic_spline_3d.params[-1], num)
 
@@ -22,13 +22,11 @@ if __name__ == '__main__':
     z_points = [5, 3, -2, 1]
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    #fig, ax = plt.subplots(figsize=(9, 9), num="Cubic Splines Simple App", projection='3d')
 
     curve, = ax.plot(x_points, y_points, z_points, "-g", label='parametric curve')
     points, = ax.plot(x_points, y_points, z_points, "x")
 
-    x_curve_points, y_curve_points, z_curve_points = calculate_2d_spline_interpolation(x_points, y_points, z_points)
-    print(curve.get_data_3d)
+    x_curve_points, y_curve_points, z_curve_points = calculate_3d_spline_interpolation(x_points, y_points, z_points)
     curve.set_data_3d(x_curve_points, y_curve_points, z_curve_points)
 
     plt.show()
