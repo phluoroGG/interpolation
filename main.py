@@ -1,63 +1,9 @@
 import matplotlib.pyplot as plt
-from lagrange_polynomial_2d import *
-from newton_polynomial_2d import *
-from cubic_spline_2d import *
-
-
-def calculate_2d_lagrange_interpolation(x, y, num=500):
-    lagrange_polynomial_2d = LagrangePolynomial2D(x, y)
-    params = np.linspace(lagrange_polynomial_2d.params[0], lagrange_polynomial_2d.params[-1], num)
-
-    result_x, result_y = [], []
-    for param in params:
-        point_x, point_y = lagrange_polynomial_2d.point(param)
-        result_x.append(point_x)
-        result_y.append(point_y)
-
-    return result_x, result_y
-
-
-def calculate_2d_newton_interpolation(x, y, num=500):
-    newton_polynomial_2d = NewtonPolynomial2D(x, y)
-    params = np.linspace(newton_polynomial_2d.params[0], newton_polynomial_2d.params[-1], num)
-
-    result_x, result_y = [], []
-    for param in params:
-        point_x, point_y = newton_polynomial_2d.point(param)
-        result_x.append(point_x)
-        result_y.append(point_y)
-
-    return result_x, result_y
-
-
-def calculate_2d_spline_interpolation(x, y, num=500):
-    cubic_spline_2d = CubicSpline2D(x, y)
-    params = np.linspace(cubic_spline_2d.params[0], cubic_spline_2d.params[-1], num)
-
-    result_x, result_y = [], []
-    for param in params:
-        point_x, point_y = cubic_spline_2d.point(param)
-        result_x.append(point_x)
-        result_y.append(point_y)
-
-    return result_x, result_y
-
+from lagrange_polynomial_2d import LagrangePolynomial2D
+from newton_polynomial_2d import NewtonPolynomial2D
+from cubic_spline_2d import CubicSpline2D
 
 if __name__ == '__main__':
-    """
-        x_points = [0, 1, 2, 3]
-        y_points = [-2, -5, 0, -4]
-        fig, ax = plt.subplots(figsize=(9, 9), num="Cubic Splines Simple App")
-
-        curve, = ax.plot(x_points, y_points, "-g", label="spline")
-        points, = ax.plot(x_points, y_points, "x")
-
-        x_curve_points, y_curve_points = calculate_2d_spline_interpolation(x_points, y_points)
-        curve.set_xdata(x_curve_points)
-        curve.set_ydata(y_curve_points)
-
-        plt.show()
-    """
     print('1. Lagrange')
     print('2. Newton')
     print('3. Newton + Lagrange')
@@ -81,7 +27,7 @@ if __name__ == '__main__':
 
     x_points = []
     y_points = []
-    fig, ax = plt.subplots(figsize=(9, 9), num="Cubic Splines Simple App")
+    fig, ax = plt.subplots(figsize=(9, 9), num="Interpolation")
 
     if flags[0]:
         curve_lagrange, = ax.plot(x_points, y_points, "-r", label="spline")
@@ -90,7 +36,6 @@ if __name__ == '__main__':
     if flags[2]:
         curve_cubic, = ax.plot(x_points, y_points, "-b", label="spline")
     points, = ax.plot(x_points, y_points, "x", color="black")
-
 
     def on_click(event):
         x_new_point, y_new_point = ax.transData.inverted().transform([event.x, event.y])
@@ -102,15 +47,15 @@ if __name__ == '__main__':
 
         if len(x_points) > 1 and len(x_points) == len(y_points):
             if flags[0]:
-                x_curve_points, y_curve_points = calculate_2d_lagrange_interpolation(x_points, y_points)
+                x_curve_points, y_curve_points = LagrangePolynomial2D(x_points, y_points).calculate_points()
                 curve_lagrange.set_xdata(x_curve_points)
                 curve_lagrange.set_ydata(y_curve_points)
             if flags[1]:
-                x_curve_points, y_curve_points = calculate_2d_newton_interpolation(x_points, y_points)
+                x_curve_points, y_curve_points = NewtonPolynomial2D(x_points, y_points).calculate_points()
                 curve_newton.set_xdata(x_curve_points)
                 curve_newton.set_ydata(y_curve_points)
             if flags[2]:
-                x_curve_points, y_curve_points = calculate_2d_spline_interpolation(x_points, y_points)
+                x_curve_points, y_curve_points = CubicSpline2D(x_points, y_points).calculate_points()
                 curve_cubic.set_xdata(x_curve_points)
                 curve_cubic.set_ydata(y_curve_points)
 
